@@ -11,6 +11,7 @@ class Deal(NotesMixin, models.Model):
     date_open = models.DateField(auto_now_add=True)
     deadline = models.DateField(null=True)
     date_done = models.DateField(null=True)
+    is_closed = models.BooleanField(default=False)
     supervisors = models.ManyToManyField(to='Manager')
     customers = models.ManyToManyField(to='Customer')
     tasks = models.ManyToManyField(to='Task')
@@ -23,17 +24,17 @@ class Task(NotesMixin, models.Model):
     title = models.CharField(max_length=1024, default='Default Task Title')
     description = models.CharField(max_length=2048, default='Default Task Description')    
     date_open = models.DateField(auto_now_add=True)
-    duration = models.DateField(null=True)
     deadline = models.DateField(null=True)
     date_done = models.DateField(null=True)
     managers = models.ManyToManyField(to='Manager')
     teams = models.ManyToManyField(to='Team')
+    is_done = models.BooleanField(default=False)
 
 
 class Manager(NotesMixin, models.Model):
-       user = models.OneToOneField(to=User)
-       phone_number = models.CharField(max_length=64, default='+1234567890')
-       profit = models.ManyToManyField(to='Profit')
+    user = models.OneToOneField(to=User)
+    phone_number = models.CharField(max_length=64, default='+1234567890')
+    profit = models.ManyToManyField(to='Profit')
 
 
 class Customer(NotesMixin, models.Model):
@@ -41,7 +42,7 @@ class Customer(NotesMixin, models.Model):
     description = models.CharField(max_length=1024, default='Default Customer Description')
     address = models.CharField(max_length=512, default='Default Customer Address')
     email = models.EmailField(max_length=64, default='default.customer@email.com')
-    phone_number = models.CharField(max_length=64, default='+1234567890')
+    phone_number = models.CharField(max_length=16, default='+1234567890')
     employees = models.ManyToManyField(to='Employee')
     profit = models.ManyToManyField(to='Profit')
 
@@ -56,8 +57,8 @@ class Team(NotesMixin, models.Model):
 
 class Employee(NotesMixin, models.Model):
     name = models.CharField(max_length=64, default='Default Employee Name')
-    description = models.CharField(max_length=256, default='Default Employee Description')
-    phone_number = models.CharField(max_length=64, default='+1234567890')
+    description = models.CharField(max_length=128, default='Default Employee Description')
+    phone_number = models.CharField(max_length=16, default='+1234567890')
     email = models.EmailField(max_length=64, default='default.customer@email.com')
     payment_status = models.CharField(max_length=128, default='Payment Status Not Set')
 
@@ -68,6 +69,8 @@ class Note(models.Model):
     content = models.CharField(max_length=1024, default='Default Note Content')
     
      
-
+class Document(models.Model):
+    document = models.FileField(upload_to='documents/%Y/%m/%d')
+    date_uploaded = models.DateField(auto_now_add=True)
 
 
