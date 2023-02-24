@@ -16,12 +16,11 @@ class DealAdmin(admin.ModelAdmin):
         'budget',
         'expenses',
     )
-    list_display_links = ('id', 'title')
+    list_display_links = ('id',)
     search_fields = ('title', 'description')
     list_editable = (
         'title',
         'description',
-        'date_open',
         'deadline',
         'date_done',
         'is_closed',
@@ -47,13 +46,11 @@ class TaskAdmin(admin.ModelAdmin):
         'date_done',
         'is_done',
     )
-    list_display_links = ('id', 'title')
+    list_display_links = ('id',)
     search_fields = ('title', 'description')
     list_editable = (
-        'id',
         'title',
         'description',
-        'date_open',
         'deadline',
         'date_done',
         'is_done',
@@ -69,8 +66,14 @@ class TaskAdmin(admin.ModelAdmin):
 @admin.register(Manager)
 class ManagerAdmin(admin.ModelAdmin):
     list_display = ('id', 'user', 'phone_number')
-    list_display_links = ('id', 'user')
-    search_fields = ('id', 'user', 'phone_number')
+    list_display_links = ('id',)
+    search_fields = (
+        'id',
+        'user__username',
+        'user__firstname',
+        'user__lastname',
+        'phone_number',
+    )
     list_editable = ('phone_number',)
 
 
@@ -84,7 +87,7 @@ class CustomerAdmin(admin.ModelAdmin):
         'email',
         'phone_number',
     )
-    list_display_links = ('id', 'name')
+    list_display_links = ('id',)
     search_fields = ('name', 'description', 'email', 'phone_number')
     list_editable = (
         'name',
@@ -103,7 +106,7 @@ class TeamAdmin(admin.ModelAdmin):
         'description',
         'team_leader',
     )
-    list_display_links = ('id', 'name')
+    list_display_links = ('id',)
     search_fields = ('name', 'description')
     list_editable = ('name', 'description')
 
@@ -118,7 +121,7 @@ class EmployeeAdmin(admin.ModelAdmin):
         'phone_number',
         'payment_status',
     )
-    list_display_links = ('id', 'name')
+    list_display_links = ('id',)
     search_fields = (
         'name',
         'description',
@@ -126,7 +129,7 @@ class EmployeeAdmin(admin.ModelAdmin):
         'phone_number',
         'payment_status',
     )
-    list_filter = ('payment_status')
+    list_filter = ('payment_status',)
     list_editable = (
         'name',
         'description',
@@ -139,7 +142,7 @@ class EmployeeAdmin(admin.ModelAdmin):
 @admin.register(Note)
 class NoteAdmin(admin.ModelAdmin):
     list_display = ('id', 'datetime_added', 'user', 'content')
-    list_display_links = ('id')
+    list_display_links = ('id',)
     search_fields = ('datetime_added', 'user', 'content')
     list_editable = ('content',)
     list_filter = ('user', 'datetime_added')
