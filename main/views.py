@@ -5,5 +5,5 @@ from .models import Deal
 
 class MainView(ListView):
     model = Deal
-    template_name = 'TODO'
+    template_name = 'base.html'
     context_object_name = 'deals'

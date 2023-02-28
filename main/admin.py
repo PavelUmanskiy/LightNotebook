@@ -34,6 +34,18 @@ class DealAdmin(admin.ModelAdmin):
         'is_closed',
     )
     
+
+@admin.register(Association)
+class AssociationAdmin(admin.ModelAdmin):
+    list_display = ('id', 'chief')
+    list_display_links = ('id',)
+    search_fields = (
+        'id',
+        'chief__username',
+        'chief__firstname',
+        'chief__lastname'
+    )
+
     
 @admin.register(Task)
 class TaskAdmin(admin.ModelAdmin):

@@ -4,9 +4,21 @@ from django.contrib.auth.models import User
 from .model_support.mixins import NotesMixin
 
 
+class Association(models.Model):
+    chief = models.OneToOneField(User, on_delete=models.PROTECT)
+    groups = models.ForeignKey(to='Group', on_delete=models.PROTECT)
+    deals = models.ForeignKey(to='Deal', on_delete=models.PROTECT)
+    tasks = models.ForeignKey(to='Task', on_delete=models.PROTECT)
+    managers = models.ForeignKey(to='Manager', on_delete=models.PROTECT)
+    customers = models.ForeignKey(to='Customer', on_delete=models.PROTECT)
+    teams = models.ForeignKey(to='Team', on_delete=models.PROTECT)
+    employees = models.ForeignKey(to='Employee', on_delete=models.PROTECT)    
+
+
 class Deal(NotesMixin, models.Model):
     title = models.CharField(max_length=1024, default='Default Deal Title')
-    description = models.CharField(max_length=2048, default='Default Deal Description')
+    description = models.CharField(max_length=2048, 
+                                   default='Default Deal Description')
     deal_groups = models.ManyToManyField(to='Group')
     date_open = models.DateField(auto_now_add=True)
     deadline = models.DateField(null=True)
@@ -22,7 +34,8 @@ class Deal(NotesMixin, models.Model):
 
 class Task(NotesMixin, models.Model):
     title = models.CharField(max_length=1024, default='Default Task Title')
-    description = models.CharField(max_length=2048, default='Default Task Description')    
+    description = models.CharField(max_length=2048, 
+                                   default='Default Task Description')    
     date_open = models.DateField(auto_now_add=True)
     deadline = models.DateField(null=True)
     date_done = models.DateField(null=True)
@@ -38,9 +51,12 @@ class Manager(NotesMixin, models.Model):
 
 class Customer(NotesMixin, models.Model):
     name = models.CharField(max_length=256, default='Default Customer Name')
-    description = models.CharField(max_length=1024, default='Default Customer Description')
-    address = models.CharField(max_length=512, default='Default Customer Address')
-    email = models.EmailField(max_length=64, default='default.customer@email.com')
+    description = models.CharField(max_length=1024, 
+                                   default='Default Customer Description')
+    address = models.CharField(max_length=512, 
+                               default='Default Customer Address')
+    email = models.EmailField(max_length=64, 
+                              default='default.customer@email.com')
     phone_number = models.CharField(max_length=16, default='+1234567890')
     employees = models.ManyToManyField(to='Employee')
     profit = models.ManyToManyField(to='Profit')
@@ -48,18 +64,24 @@ class Customer(NotesMixin, models.Model):
 
 class Team(NotesMixin, models.Model):
     name = models.CharField(max_length=128, default='Default Team Name')
-    description = models.CharField(max_length=256, default='Default Team Description')
+    description = models.CharField(max_length=256, 
+                                   default='Default Team Description')
     managers = models.ManyToManyField(to='Manager')
-    team_leader = models.OneToOneField(to='Employee', on_delete=models.PROTECT, related_name='foreman')
+    team_leader = models.OneToOneField(to='Employee', 
+                                       on_delete=models.PROTECT, 
+                                       related_name='foreman')
     employees = models.ManyToManyField(to='Employee')
 
 
 class Employee(NotesMixin, models.Model):
     name = models.CharField(max_length=64, default='Default Employee Name')
-    description = models.CharField(max_length=128, default='Default Employee Description')
+    description = models.CharField(max_length=128, 
+                                   default='Default Employee Description')
     phone_number = models.CharField(max_length=16, default='+1234567890')
-    email = models.EmailField(max_length=64, default='default.customer@email.com')
-    payment_status = models.CharField(max_length=128, default='Payment Status Not Set')
+    email = models.EmailField(max_length=64, 
+                              default='default.customer@email.com')
+    payment_status = models.CharField(max_length=128, 
+                                      default='Payment Status Not Set')
 
 
 class Note(models.Model):
