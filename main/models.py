@@ -6,13 +6,13 @@ from .model_support.mixins import NotesMixin
 
 class Association(models.Model):
     chief = models.OneToOneField(User, on_delete=models.PROTECT)
-    groups = models.ForeignKey(to='Group', on_delete=models.PROTECT)
-    deals = models.ForeignKey(to='Deal', on_delete=models.PROTECT)
-    tasks = models.ForeignKey(to='Task', on_delete=models.PROTECT)
-    managers = models.ForeignKey(to='Manager', on_delete=models.PROTECT)
-    customers = models.ForeignKey(to='Customer', on_delete=models.PROTECT)
-    teams = models.ForeignKey(to='Team', on_delete=models.PROTECT)
-    employees = models.ForeignKey(to='Employee', on_delete=models.PROTECT)    
+    groups = models.ManyToManyField(to='Group', null=True)
+    deals = models.ManyToManyField(to='Deal', null=True)
+    tasks = models.ManyToManyField(to='Task', null=True)
+    managers = models.ManyToManyField(to='Manager', null=True)
+    customers = models.ManyToManyField(to='Customer', null=True)
+    teams = models.ManyToManyField(to='Team', null=True)
+    employees = models.ManyToManyField(to='Employee', null=True)    
 
 
 class Deal(NotesMixin, models.Model):
@@ -30,6 +30,10 @@ class Deal(NotesMixin, models.Model):
     budget = models.FloatField(default=0.0, null=True)
     expenses = models.FloatField(default=0.0, null=True)
     documents = models.ManyToManyField(to='Document')
+    
+    def add_expenses(self, amount:float) -> None:
+        self.expenses += amount
+        self.save()
 
 
 class Task(NotesMixin, models.Model):
@@ -40,6 +44,7 @@ class Task(NotesMixin, models.Model):
     deadline = models.DateField(null=True)
     date_done = models.DateField(null=True)
     managers = models.ManyToManyField(to='Manager')
+    teams = models.ManyToManyField(to='Team')
     is_done = models.BooleanField(default=False)
 
 
@@ -79,7 +84,7 @@ class Employee(NotesMixin, models.Model):
                                    default='Default Employee Description')
     phone_number = models.CharField(max_length=16, default='+1234567890')
     email = models.EmailField(max_length=64, 
-                              default='default.customer@email.com')
+                              default='default.employee@email.com')
     payment_status = models.CharField(max_length=128, 
                                       default='Payment Status Not Set')
 
@@ -88,6 +93,7 @@ class Note(models.Model):
     datetime_added = models.DateTimeField(auto_now_add=True)
     user = models.OneToOneField(to=User, on_delete=models.PROTECT)
     content = models.CharField(max_length=1024, default='Default Note Content')
+    public = models.BooleanField(default=True)
     
      
 class Document(models.Model):
