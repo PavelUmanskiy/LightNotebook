@@ -1,33 +1,3 @@
-/*header {
-    position: static;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: auto;
-    height: 15px;
-    color:white;
-    background-color:steelblue;
-  }
-  header > .container,
-  header > .container-fluid,
-  header > .container-sm,
-  header > .container-md,
-  header > .container-lg,
-  header > .container-xl,
-  header > .container-xxl {
-    display: flex;
-    flex-wrap: inherit;
-    align-items: center;
-    justify-content: space-between;
-  }*/
-.container {
-  height:20px;
-  width:100%;
-  background-color:steelblue;
-  flex-wrap: nowrap;
-  justify-content: flex-start;
-  padding: 10px 0px 0px 10px;
-}
 .header {
   position: fixed;
   z-index: 100;
@@ -45,12 +15,94 @@
   width:100%;
   background-color: slategray;
 }
+.global-notes {
+  border: 1px solid;
+  border-radius: 0px 0px 20px 20px;
+  padding: 8px;
+}
+.deal-card-href {
+  color: rgb(48, 48, 48);
+  text-decoration: none;
+}
+a:visited {
+  color: rgb(48, 48, 48);
+}
+.blackout {
+  z-index: 97;
+  background: rgba(102, 102, 102, 0.5);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: none;
+}
+.blackout:target {display: block;}
+.deal-popup {
+  z-index: 98;
+  position: absolute;
+  top: 55px;
+  left: 25%;
+  width: 50%;
+  height: 90%;
+  border-radius: 20px;
+  background-color: rgb(231, 231, 231);
+}
+.popup-title {
+  z-index: 98;
+  margin: 10px 3px 5px 10px;
+  max-width: 75%;
+  color:rgb(23, 110, 139);
+  font-size: 1.2em;
+}
+.popup-info {
+  margin: 14px 5px 0px 10px;
+  padding: 8px;
+  border: 1px solid;
+  border-radius: 20px 20px 0 0;
+  max-height: 10%;
+  overflow-y: scroll;
+}
+.popup-tasks-field {
+  margin: 0px 5px 3px 10px;
+  padding: 8px;
+  border: 1px solid;
+  border-radius: 0px 0px 20px 20px;
+  max-height: 60%;
+  overflow-y: scroll;
+}
+.popup-task {
+  margin: 5px 0px 0px 0px;
+  padding: 5px;
+  border: 1px solid;
+  border-radius: 20px 20px 0px 0px;
+}
+.popup-task-detail {
+  font-size: medium;
+}
+.popup-text-field {
+  margin: 0px;
+  padding-left: 20px;
+}
+.deal-popup-dates {
+  z-index: 99;
+  position: absolute;
+  top: 50px;
+  right: 26%;
+  width: 10%;
+  height: 8%;
+  padding-top: 9px;
+  background-color: rgb(211, 212, 175);
+  border-radius: 20px;
+  font-size: 1.2em;
+  text-align: center;
+}
 .deal-card {
   position: relative;
-  z-index: 99;
+  z-index: 96;
   display: inline-block;
   border-radius: 20px;
-  margin: 20px 10px 0px 5px;
+  margin: 10px 10px 0px 5px;
   background-color: rgb(216, 227, 248);
   height: 25rem;
   width: 250px;
@@ -68,11 +120,27 @@
 .deal-card-content {
   position: relative;
   margin-top: 20px;
-  text-align: center;
+  text-align: left;
   max-height: 20rem;
   background-color: transparent;
   color: rgb(48, 48, 48);
   overflow-y: scroll;
+}
+.content-title {
+  margin: 0px 2px 3px 2px;
+  color: rgb(23, 110, 139);
+}
+.content-description {
+  margin: 3px 2px 3px 2px;
+  color: rgb(23, 110, 139);
+}
+.content-tasks-ul {
+  margin: 3px 2px;
+  padding-left: 32px;
+}
+.content-tasks-ul-item{
+  margin: 2px 2px;
+  color: rgb(48, 48, 48);
 }
 .deal-card-notes {
   position: absolute;
@@ -86,6 +154,7 @@
 .deal-card-divider {
   width: auto;
   color: rgb(48, 48, 48);
+  margin: 0 auto;
 }
 
 .sidebar {
@@ -115,6 +184,21 @@
 .workspace {
   margin-left: 142px;
 }
+.workspace-group-title {
+  line-height: 40px;
+  font-size: 1.8em;
+  margin-left: 2%;
+}
+.workspace-upper-divider {
+  margin: 0px;
+  margin-left: 2%;
+  width: 100%;
+}
 .li-main {
   display:inline-block;
+}
+
+::-webkit-scrollbar { 
+  width: 0; 
+  height: 0; 
 }
