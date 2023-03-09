@@ -1,18 +1,21 @@
+from os import path
+
 from django.db import models
 from django.contrib.auth.models import User
 
+from Light_Notebook.settings import BASE_DIR
 from .model_support.mixins import NotesMixin
 
 
 class Association(models.Model):
     chief = models.OneToOneField(User, on_delete=models.PROTECT)
-    groups = models.ManyToManyField(to='Group', null=True)
-    deals = models.ManyToManyField(to='Deal', null=True)
-    tasks = models.ManyToManyField(to='Task', null=True)
-    managers = models.ManyToManyField(to='Manager', null=True)
-    customers = models.ManyToManyField(to='Customer', null=True)
-    teams = models.ManyToManyField(to='Team', null=True)
-    employees = models.ManyToManyField(to='Employee', null=True)    
+    groups = models.ManyToManyField(to='Group')
+    deals = models.ManyToManyField(to='Deal')
+    tasks = models.ManyToManyField(to='Task')
+    managers = models.ManyToManyField(to='Manager')
+    customers = models.ManyToManyField(to='Customer')
+    teams = models.ManyToManyField(to='Team')
+    employees = models.ManyToManyField(to='Employee')    
 
 
 class Deal(NotesMixin, models.Model):
@@ -34,6 +37,9 @@ class Deal(NotesMixin, models.Model):
     def add_expenses(self, amount:float) -> None:
         self.expenses += amount
         self.save()
+    
+    def get_balance(self) -> float | None:
+        return self.budget - self.expenses
 
 
 class Task(NotesMixin, models.Model):
@@ -99,6 +105,13 @@ class Note(models.Model):
 class Document(models.Model):
     document = models.FileField(upload_to='documents/%Y/%m/%d')
     date_uploaded = models.DateField(auto_now_add=True)
+    
+    def get_document_path(self):
+        return path.relpath(f'{BASE_DIR}/uploads/{self.document}')
+    
+    def get_display_name(self):
+        last_slash = self.document.name.rfind('/')
+        return self.document.name[last_slash + 1:]
 
 
 class Profit(models.Model):

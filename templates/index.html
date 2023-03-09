@@ -4,58 +4,83 @@
 {% endblock title %}
 {% block content %}
     {% for deal in deals %}
-        <a href="#">
-            <div class="blackout" id="blackout">
-                <div class="deal-popup-dates">
-                    <span class = "popup-dates">{{ deal.date_open }}</span>
-                    <hr class="deal-card-divider">
-                    <span class = "popup-dates">{{ deal.deadline }}</span>
-                </div>
-                <div class="deal-popup">
-                    <div class="popup-title">{{ deal.title }}</div>
-                    <div class="popup-info">
-                        Справка:
-                        <div class="popup-text-field">
-                            Описание:
-                            <br>
-                            {{ deal.description }}
-                            <br>
-                            Бюджет: {{ deal.budget }} | Расходы: {{ deal.expenses|default:"Нет"}} | Баланс: {% deal_balance deal_budget={{deal.budget}} deal_expenses={{deal_expenses}} %}
-                            <br>
-                            Ответственные:
-                            {% for supervisor in deal.supervisors.all %}
-                                {{ supervisor.user.username }}
-                            {% endfor %}
-                        </div>
-                    </div>
-                    <div class="popup-tasks-field">
-                        Задачи:
-                        {% for task in deal.tasks.all %}
-                            <div class="popup-task">
-                                {{ task.title }}
-                                <div class="popup-task-detail">
-                                    {{ task.description }}
-                                </div>
-                            </div>
-                            <div class="global-notes">
-                                NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES 
-                            </div>
+    <!--Deal popup (with blackout)-->
+        <div class="blackout" id="blackout{{forloop.counter}}">
+            <a href="#">
+                <div class="blackout-exit-left"></div>
+                <div class="blackout-exit-right"></div>
+            </a>
+            <div class="deal-popup-dates">
+                <span class = "popup-dates">{{ deal.date_open }}</span>
+                <hr class="deal-card-divider">
+                <span class = "popup-dates">{{ deal.deadline }}</span>
+            </div>
+            <div class="deal-popup">
+                <div class="popup-title">{{ deal.title }}</div>
+                <div class="popup-info">
+                    Справка:
+                    <div class="popup-text-field">
+                        Описание:
+                        <br>
+                        {{ deal.description }}
+                        <br>
+                        Бюджет: {{ deal.budget }} | Расходы: {{ deal.expenses|default:"Нет"}} | Баланс: {{ deal.get_balance }}
+                        <br>
+                        Ответственные:
+                        {% for supervisor in deal.supervisors.all %}
+                            {{ supervisor.user.username }}
+                        {% endfor %}
+                        <br>
+                        Документы:
+                        {% for document in deal.documents.all %}
+                            <a href="uploads/{{document.document}}" download>{{ document.get_display_name }}</a>
                         {% endfor %}
                     </div>
-                    <hr>
+                </div>
+                <div class="popup-tasks-field">
+                    Задачи:
+                    {% for task in deal.tasks.all %}
+                        <div class="popup-task">
+                            {{ task.title }}
+                            <div class="popup-task-detail">
+                                Описание:
+                                <br>
+                                {{ task.description }}
+                                <br>
+                                Расходы: {{ task.expenses|default:"Нет" }}
+                                <br>
+                                Менеджеры:
+                                {% for manager in task.managers.all %}
+                                    {{ manager.user.username }}
+                                {% endfor %}
+                                <br>
+                                Команды:
+                                {% for team in task.teams.all %}
+                                    {{ team.name }}
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="global-notes">
+                            NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES 
+                        </div>
+                    {% endfor %}
+                </div>
+                <hr>
+                <div class="global-notes">
+                    NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES 
                 </div>
             </div>
-        </a>
+        </div>
     {% endfor %}
-    <span class="workspace-group-title">Some group</span>
+    <span class="workspace-group-title">Все группы</span>
     <hr class="workspace-upper-divider">
     {% for deal in deals %}
-    <a class="deal-card-href" href="#blackout">
+    <!--Deal card-->
+    <a class="deal-card-href" href="#blackout{{forloop.counter}}">
         <div class="deal-card">
             <div class="deal-card-date">{{ deal.date_open|date:"d M Y" }}</div>
             <div class="deal-card-content">
                 <p class="content-title">{{ deal.title }}</p>
-                <!--<p class="content-description">{{ deal.description }}</p>-->
                 <ul class="content-tasks-ul">
                 {% for task in deal.tasks.all %}
                 <li class="content-tasks-ul-item">{{ task.title }}</li>
@@ -63,7 +88,7 @@
                 </ul>
             </div>
             <hr class="deal-card-divider">
-            <div class="deal-card-notes">
+            <div class="global-notes">
                 notes notes notes notes notes notes
             </div>
         </div>

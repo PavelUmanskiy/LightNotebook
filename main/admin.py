@@ -158,3 +158,11 @@ class NoteAdmin(admin.ModelAdmin):
     search_fields = ('datetime_added', 'user', 'content')
     list_editable = ('content',)
     list_filter = ('user', 'datetime_added')
+
+
+@admin.register(Document)
+class DocumentAdmin(admin.ModelAdmin):
+    list_display = ('id', 'document', 'date_uploaded')
+    list_display_links = ('id',)
+    search_fields = ('id', 'date_uploaded')
+    list_filter = ('date_uploaded',)

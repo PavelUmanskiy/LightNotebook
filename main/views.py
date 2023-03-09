@@ -20,6 +20,6 @@ class MainView(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         for association in self.queryset:
-            context['deals'] = association.deals.all()
-        
+            context['deals'] = association.deals.all().order_by('-id')
+            context['association_for_utils'] = association
         return context

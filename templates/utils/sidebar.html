@@ -1,7 +1,19 @@
 <div class="sidebar">
     <div class="sidebar-content">
-        <div class="sidebar-plate">
-        CONTENT
-        </div>
+        <span>Группы:</span>
+        {% for group in association_for_utils.groups.all %}
+            <div class="sidebar-plate">{{group.name}}</div>
+        {% endfor %}
+        <hr>
+        <span class="class-name">Менеджеры:</span>
+        {% for manager in association_for_utils.managers.all %}
+            <div class="sidebar-plate">{{manager.user.username}}</div>
+        {% endfor %}
+        <hr>
+        <span>Команды:</span>
+        {% for team in association_for_utils.teams.all %}
+            <div class="sidebar-plate">{{team.name}}</div>
+        {% endfor %}
+        <hr>
     </div>
 </div>
