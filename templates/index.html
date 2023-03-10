@@ -72,11 +72,18 @@
             </div>
         </div>
     {% endfor %}
-    <span class="workspace-group-title">Все группы</span>
+
+    {% if group_id == 0 %}
+        <span class="workspace-group-title">Все группы</span>
+    {% else %}
+        <span class="workspace-group-title">{{ group_name }}</span>
+    {% endif %}
+    
     <hr class="workspace-upper-divider">
+    <ul class="workspace-cards-ul">
     {% for deal in deals %}
     <!--Deal card-->
-    <a class="deal-card-href" href="#blackout{{forloop.counter}}">
+    <li><a class="deal-card-href" href="#blackout{{forloop.counter}}">
         <div class="deal-card">
             <div class="deal-card-date">{{ deal.date_open|date:"d M Y" }}</div>
             <div class="deal-card-content">
@@ -92,6 +99,7 @@
                 notes notes notes notes notes notes
             </div>
         </div>
-    </a>
+    </a></li>
     {% endfor %}
+    </ul>
 {% endblock content %}

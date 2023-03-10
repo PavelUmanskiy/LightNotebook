@@ -1,10 +1,11 @@
 <header style="margin-bottom:36px;">
     <div class="header">
         <div class="header-box">
-            <a href="{% url 'main' %}">
+            {% if association_for_utils.id %}
+            <a href="{% url 'main' association_for_utils.id %}">
                 <div class="header-button"></div>
             </a>
+            {% endif %}
         </div>
-{{user.username}}
     </div>
 </header>

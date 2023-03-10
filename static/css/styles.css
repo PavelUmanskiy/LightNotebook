@@ -41,6 +41,7 @@
 .deal-card-href {
   color: rgb(48, 48, 48);
   text-decoration: none;
+  display: inline-block;
 }
 a:visited {
   color: rgb(48, 48, 48);
@@ -224,17 +225,45 @@ a:visited {
   line-height: 40px;
   font-size: 1.8em;
   margin-left: 2%;
+  color: rgb(23, 110, 139);
 }
 .workspace-upper-divider {
   margin: 0px;
   margin-left: 2%;
   width: 100%;
 }
-.li-main {
-  display:inline-block;
+.workspace-cards-ul {
+  display:inline-flex;
 }
-
+.picker-card-big {
+  position: absolute;
+  top: 15%;
+  left: 34%;
+  padding: 8px;
+  border: 1px solid rgb(124, 123, 123);
+  border-radius: 20px;
+  color:rgb(48, 48, 48);
+  background-color: rgb(231, 231, 231);
+  height: 70%;
+  width: 32%;
+  text-align: center;
+  overflow-y: scroll;
+}
+.picker-content {
+  margin: auto;
+  padding: 8px;
+  border: 1px solid rgb(147, 176, 186);
+  border-radius: 20px;
+  background-color: rgb(211, 212, 175);
+  width: 70%;
+  height: 7%;
+  text-align: center;
+  overflow-y: scroll;
+}
 ::-webkit-scrollbar { 
   width: 0; 
   height: 0; 
+}
+::marker {
+  content: none;
 }

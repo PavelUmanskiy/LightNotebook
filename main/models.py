@@ -8,6 +8,10 @@ from .model_support.mixins import NotesMixin
 
 
 class Association(models.Model):
+    title = models.CharField(max_length=1024, 
+                             default='Default Association Name')
+    description = models.CharField(max_length=1024,
+                                   default='Default Association Description')
     chief = models.OneToOneField(User, on_delete=models.PROTECT)
     groups = models.ManyToManyField(to='Group')
     deals = models.ManyToManyField(to='Deal')

@@ -1,19 +1,21 @@
-<div class="sidebar">
-    <div class="sidebar-content">
-        <span>Группы:</span>
-        {% for group in association_for_utils.groups.all %}
-            <div class="sidebar-plate">{{group.name}}</div>
-        {% endfor %}
-        <hr>
-        <span class="class-name">Менеджеры:</span>
-        {% for manager in association_for_utils.managers.all %}
-            <div class="sidebar-plate">{{manager.user.username}}</div>
-        {% endfor %}
-        <hr>
-        <span>Команды:</span>
-        {% for team in association_for_utils.teams.all %}
-            <div class="sidebar-plate">{{team.name}}</div>
-        {% endfor %}
-        <hr>
+{% if association_for_utils.id %}
+    <div class="sidebar">
+        <div class="sidebar-content">
+            <span>Группы:</span>
+            {% for group in association_for_utils.groups.all %}
+                <a class="deal-card-href" href="{% url 'group_view' association_for_utils.id forloop.counter %}"><div class="sidebar-plate">{{group.name}}</div><a>
+            {% endfor %}
+            <hr>
+            <span class="class-name">Менеджеры:</span>
+            {% for manager in association_for_utils.managers.all %}
+                <div class="sidebar-plate">{{manager.user.username}}</div>
+            {% endfor %}
+            <hr>
+            <span>Команды:</span>
+            {% for team in association_for_utils.teams.all %}
+                <div class="sidebar-plate">{{team.name}}</div>
+            {% endfor %}
+            <hr>
+        </div>
     </div>
-</div>
+{% endif %}

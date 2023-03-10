@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block title %}
+    <title>Выбор ассоциации</title>
+{% endblock title %}
+{% block content %}
+    <div class="picker-card-big">
+        <span>Здравствуйте, {{user.username}}!</span>
+        <br>
+        <span>Выберите ассоциацию, в которой Вы бы хотели продолжить работу:</span>
+        <br>
+        {% for association  in associations %}
+            <div class="picker-content">
+                <a href="{% url 'main' association.id %}">{{ association.title }}</a>
+                <br>
+                <span>{{ association.description }}</span>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock content %}
