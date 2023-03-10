@@ -31,20 +31,15 @@ class MainView(LoginRequiredMixin, ListView):
     context_object_name = 'association'
     
     def get_queryset(self):
-        # Load only manager's specific association, situation when manager
-        # belongs to different associations - TODO
-        self.queryset = \
-            Manager.objects.get(user=self.request.user.id).association_set.all()
-        if len(self.queryset) > 1:
-            return redirect('association_picker', permanent=True)
+        self.queryset = Manager.objects.get(user=self.request.user.id)\
+            .association_set.get(pk=self.kwargs['association_id'])
         return super().get_queryset()    
-
+    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         print(context.items(), self.kwargs.items(), sep='\n'+'#'*50+'\n')
-        for association in self.queryset:
-            context['deals'] = association.deals.all().order_by('-id')
-            context['association_for_utils'] = association
+        context['deals'] = self.queryset.deals.all().order_by('-id')
+        context['association_for_utils'] = self.queryset
         context['group_id'] = 0
         return context
 

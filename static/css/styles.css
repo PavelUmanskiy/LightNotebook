@@ -38,6 +38,12 @@
   max-height: 15%;
   overflow-y: scroll;
 }
+.note {
+  line-height: 10px;
+}
+.notes-span {
+  font-size: 0.8em;
+}
 .deal-card-href {
   color: rgb(48, 48, 48);
   text-decoration: none;

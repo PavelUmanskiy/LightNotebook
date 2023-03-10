@@ -61,13 +61,29 @@
                             </div>
                         </div>
                         <div class="global-notes">
-                            NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES 
+                            {% for note in task.notes.all %}
+                                <div class="note">
+                                    <span class="notes-span">{{ note.user.username }}</span>
+                                    <br>
+                                    <span class="notes-span">{{ note.content }}</span>
+                                </div>
+                            {% empty %}
+                                <span class="notes-span">Добавьте заметку...</span>
+                            {% endfor %} 
                         </div>
                     {% endfor %}
                 </div>
                 <hr>
                 <div class="global-notes">
-                    NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES 
+                    {% for note in deal.notes.all %}
+                        <div class="note">
+                            <span class="notes-span">{{ note.user.username }}</span>
+                            <br>
+                            <span class="notes-span">{{ note.content }}</span>
+                        </div>
+                    {% empty %}
+                        <span class="notes-span">Добавьте заметку...</span>
+                    {% endfor %} 
                 </div>
             </div>
         </div>
@@ -96,7 +112,15 @@
             </div>
             <hr class="deal-card-divider">
             <div class="global-notes">
-                notes notes notes notes notes notes
+                {% for note in deal.notes.all %}
+                    <div class="note">
+                        <span class="notes-span">{{ note.user.username }}</span>
+                        <br>
+                        <span class="notes-span">{{ note.content }}</span>
+                    </div>
+                {% empty %}
+                    <span class="notes-span">Добавьте заметку...</span>
+                {% endfor %}
             </div>
         </div>
     </a></li>

@@ -4,7 +4,6 @@ from django.db import models
 from django.contrib.auth.models import User
 
 from Light_Notebook.settings import BASE_DIR
-from .model_support.mixins import NotesMixin
 
 
 class Association(models.Model):
@@ -12,7 +11,7 @@ class Association(models.Model):
                              default='Default Association Name')
     description = models.CharField(max_length=1024,
                                    default='Default Association Description')
-    chief = models.OneToOneField(User, on_delete=models.PROTECT)
+    chief = models.ForeignKey(User, on_delete=models.PROTECT, unique=False)
     groups = models.ManyToManyField(to='Group')
     deals = models.ManyToManyField(to='Deal')
     tasks = models.ManyToManyField(to='Task')
@@ -22,7 +21,7 @@ class Association(models.Model):
     employees = models.ManyToManyField(to='Employee')    
 
 
-class Deal(NotesMixin, models.Model):
+class Deal(models.Model):
     title = models.CharField(max_length=1024, default='Default Deal Title')
     description = models.CharField(max_length=2048, 
                                    default='Default Deal Description')
@@ -37,6 +36,7 @@ class Deal(NotesMixin, models.Model):
     budget = models.FloatField(default=0.0, null=True)
     expenses = models.FloatField(default=0.0, null=True)
     documents = models.ManyToManyField(to='Document')
+    notes = models.ManyToManyField(to='Note')
     
     def add_expenses(self, amount:float) -> None:
         self.expenses += amount
@@ -46,7 +46,7 @@ class Deal(NotesMixin, models.Model):
         return self.budget - self.expenses
 
 
-class Task(NotesMixin, models.Model):
+class Task(models.Model):
     title = models.CharField(max_length=1024, default='Default Task Title')
     description = models.CharField(max_length=2048, 
                                    default='Default Task Description')    
@@ -56,15 +56,17 @@ class Task(NotesMixin, models.Model):
     managers = models.ManyToManyField(to='Manager')
     teams = models.ManyToManyField(to='Team')
     is_done = models.BooleanField(default=False)
+    notes = models.ManyToManyField(to='Note')
 
 
-class Manager(NotesMixin, models.Model):
+class Manager(models.Model):
     user = models.OneToOneField(to=User, on_delete=models.PROTECT)
     phone_number = models.CharField(max_length=64, default='+1234567890')
     profit = models.ManyToManyField(to='Profit')
+    notes = models.ManyToManyField(to='Note')
 
 
-class Customer(NotesMixin, models.Model):
+class Customer(models.Model):
     name = models.CharField(max_length=256, default='Default Customer Name')
     description = models.CharField(max_length=1024, 
                                    default='Default Customer Description')
@@ -75,9 +77,10 @@ class Customer(NotesMixin, models.Model):
     phone_number = models.CharField(max_length=16, default='+1234567890')
     employees = models.ManyToManyField(to='Employee')
     profit = models.ManyToManyField(to='Profit')
+    notes = models.ManyToManyField(to='Note')
 
 
-class Team(NotesMixin, models.Model):
+class Team(models.Model):
     name = models.CharField(max_length=128, default='Default Team Name')
     description = models.CharField(max_length=256, 
                                    default='Default Team Description')
@@ -86,9 +89,10 @@ class Team(NotesMixin, models.Model):
                                        on_delete=models.PROTECT, 
                                        related_name='foreman')
     employees = models.ManyToManyField(to='Employee')
+    notes = models.ManyToManyField(to='Note')
 
 
-class Employee(NotesMixin, models.Model):
+class Employee(models.Model):
     name = models.CharField(max_length=64, default='Default Employee Name')
     description = models.CharField(max_length=128, 
                                    default='Default Employee Description')
@@ -97,6 +101,7 @@ class Employee(NotesMixin, models.Model):
                               default='default.employee@email.com')
     payment_status = models.CharField(max_length=128, 
                                       default='Payment Status Not Set')
+    notes = models.ManyToManyField(to='Note')
 
 
 class Note(models.Model):
