@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block title %}
+    <title>Manager</title>
+{% endblock title %}
+{% block content %}
+    <div class="picker-card-big">
+        <span>{{ manager.user.username }}</span>
+        <br>
+        <div class="picker-content">
+            <span>Фамилия, имя, отчество:</span>
+            <br>
+            <span>{{ manager.user.last_name }} {{ manager.user.first_name}} {{ manager.patronymic }}</span>
+        </div>
+        <span>Профит:</span>
+        <div class="picker-content">
+            {% for profit in manager.profit.all %}
+            <hr>
+            {{ profit.date_earned }}: {{ profit.amount }}
+            {% empty %}
+            <br>
+            <span>Нет</span>
+            {% endfor %}
+            
+        </div>
+        <span>Команды:</span>
+        <div class="picker-teams">
+            {% for team in teams %}
+            <a class="deal-card-href" href="{% url 'team' team.pk %}">
+                {{ team.name }}
+                <br>
+                {{team.description}}
+            </a>
+            <hr>
+            {% empty %}
+            <span>Нет<span>
+            {% endfor %}
+        </div>
+        <div class="global-notes">
+            NOTES
+        </div>
+    </div>
+{% endblock content %}

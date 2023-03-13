@@ -61,6 +61,7 @@ class Task(models.Model):
 
 class Manager(models.Model):
     user = models.OneToOneField(to=User, on_delete=models.PROTECT)
+    patronymic = models.CharField(max_length=64, null=True, default=None)
     phone_number = models.CharField(max_length=64, default='+1234567890')
     profit = models.ManyToManyField(to='Profit')
     notes = models.ManyToManyField(to='Note')

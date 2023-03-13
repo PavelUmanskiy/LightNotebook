@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %}
+    <title>Team</title>
+{% endblock title %}
+{% block content %}
+    <div class="picker-card-big">
+        <span class="picker-span-important">{{ team.name }}</span>
+        <br>
+        <span>{{ team.description }}</span>
+        <div class="picker-content">
+            <span>Ответственные менеджеры:</span>
+            <br>
+            {% for manager in team.managers.all %}
+                <a class="deal-card-href" href="{% url 'manager' manager.pk %}">{{manager.user.username}}</a>
+            {% endfor %}
+        </div>
+        <span>Участники команды:</span>
+        <div class="picker-teams">
+            {% for employee in team.employees.all %}
+                {{ employee.name }}
+                <br>
+                {{ employee.phone_number }} | {{ employee.email }}
+                <br>
+                {{ employee.payment_status }}
+                <hr>
+            {% empty %}
+                <br>
+                <span>Нет</span>
+            {% endfor %}
+            
+        </div>
+    </div>
+{% endblock content %}

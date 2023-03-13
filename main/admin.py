@@ -77,7 +77,7 @@ class TaskAdmin(admin.ModelAdmin):
 
 @admin.register(Manager)
 class ManagerAdmin(admin.ModelAdmin):
-    list_display = ('id', 'user', 'phone_number')
+    list_display = ('id', 'user', 'patronymic','phone_number')
     list_display_links = ('id',)
     search_fields = (
         'id',
@@ -85,8 +85,9 @@ class ManagerAdmin(admin.ModelAdmin):
         'user__firstname',
         'user__lastname',
         'phone_number',
+        'patronymic',
     )
-    list_editable = ('phone_number',)
+    list_editable = ('phone_number', 'patronymic')
 
 
 @admin.register(Customer)

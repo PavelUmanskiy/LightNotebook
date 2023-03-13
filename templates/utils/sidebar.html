@@ -8,12 +8,17 @@
             <hr>
             <span class="class-name">Менеджеры:</span>
             {% for manager in association_for_utils.managers.all %}
-                <div class="sidebar-plate">{{manager.user.username}}</div>
+                <a class="deal-card-href" href="{% url 'manager' manager.pk %}"><div class="sidebar-plate">{{manager.user.username}}</div></a>
             {% endfor %}
             <hr>
             <span>Команды:</span>
             {% for team in association_for_utils.teams.all %}
-                <div class="sidebar-plate">{{team.name}}</div>
+                <a class="deal-card-href" href="{% url 'team' team.pk %}"><div class="sidebar-plate">{{team.name}}</div></a>
+            {% endfor %}
+            <hr>
+            <span>Клиенты:</span>
+            {% for customer in association_for_utils.customers.all %}
+                    <a class="deal-card-href" href="{% url 'customer' customer.pk %}"><div class="sidebar-plate">{{customer.name}}</div></a>
             {% endfor %}
             <hr>
         </div>

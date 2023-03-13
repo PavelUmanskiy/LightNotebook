@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}
+    <title>Customer</title>
+{% endblock title %}
+{% block content %}
+    <div class="picker-card-big">
+        <span class="picker-span-important">{{ customer.name }}</span>
+        <br>
+        <span>{{ customer.description }}</span>
+        <br>
+        <span>{{ customer.address }}</span>
+        <br>
+        {{ customer.phone_number }} | {{ customer.email }}
+        <br>
+        <span>Сотрудники клиента:</span>
+        <div class="picker-teams">
+            {% for employee in customer.employees.all %}
+                {{ employee.name }}
+                <br>
+                {{ employee.phone_number }} | {{ employee.email }}
+                <hr>
+            {% empty %}
+                <br>
+                <span>Нет</span>
+            {% endfor %}    
+        </div>
+    </div>
+{% endblock content %}
