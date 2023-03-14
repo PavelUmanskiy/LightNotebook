@@ -57,6 +57,9 @@ class Task(models.Model):
     teams = models.ManyToManyField(to='Team')
     is_done = models.BooleanField(default=False)
     notes = models.ManyToManyField(to='Note')
+    
+    def __str__(self) -> str:
+        return self.title
 
 
 class Manager(models.Model):
@@ -65,6 +68,9 @@ class Manager(models.Model):
     phone_number = models.CharField(max_length=64, default='+1234567890')
     profit = models.ManyToManyField(to='Profit')
     notes = models.ManyToManyField(to='Note')
+    
+    def __str__(self) -> str:
+        return self.user.username
 
 
 class Customer(models.Model):
@@ -79,6 +85,9 @@ class Customer(models.Model):
     employees = models.ManyToManyField(to='Employee')
     profit = models.ManyToManyField(to='Profit')
     notes = models.ManyToManyField(to='Note')
+    
+    def __str__(self) -> str:
+        return self.name
 
 
 class Team(models.Model):
@@ -122,6 +131,9 @@ class Document(models.Model):
     def get_display_name(self):
         last_slash = self.document.name.rfind('/')
         return self.document.name[last_slash + 1:]
+    
+    def __str__(self) -> str:
+        return self.get_display_name()
 
 
 class Profit(models.Model):
@@ -131,3 +143,6 @@ class Profit(models.Model):
 
 class Group(models.Model):
     name = models.CharField(max_length=256, default='Default Group Name')
+    
+    def __str__(self) -> str:
+        return self.name

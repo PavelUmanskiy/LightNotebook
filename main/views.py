@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
+from .forms import DealForm, TaskForm, TeamForm, EmployeeForm, CustomerForm
 from .models import (
     Association,
     Customer,
@@ -129,5 +130,28 @@ class CustomerView(LoginRequiredMixin, DetailView):
         context['association_for_utils'] = Association.objects\
             .get(pk=self.request.session['last_association'])
         return context
-    
-    
+
+
+class DealCreate(LoginRequiredMixin, CreateView):
+    template_name = 'create/deal.html'
+    form_class = DealForm
+
+
+class TaskCreate(LoginRequiredMixin, CreateView):
+    template_name = 'create/task.html'
+    form_class = TaskForm
+
+
+class TeamCreate(LoginRequiredMixin, CreateView):
+    template_name = 'create/deal.html'
+    form_class = TeamForm
+
+
+class EmployeeCreate(LoginRequiredMixin, CreateView):
+    template_name = 'create/employee.html'
+    form_class = EmployeeForm
+
+
+class CustomerCreate(LoginRequiredMixin, CreateView):
+    template_name = 'create/customer.html'
+    form_class = CustomerForm
