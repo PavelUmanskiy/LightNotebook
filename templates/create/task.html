@@ -1,16 +1,28 @@
 {% extends 'base.html' %}
 {% block title %}
-<title>New Deal</title>
+<title>New Task</title>
 {% endblock title %}
 {% block content %}
-    <div class="picker-card-big">
+    <div class="blackout" id="task_blackout">
+        <a href="#task">
+            <div class="blackout-exit-left">task</div>
+            <div class="blackout-exit-right">task</div>
+        </a>
+        <iframe id="testIframe" src="{% url 'new_team' %}">test</iframe>
+    </div>
+    <div class="picker-card-big" id="#task">
         <form method="post">
             {% csrf_token %}
             <div class="form-error">{{form.non_field_errors}}</div>
             {% for form_field in form %}
                 <p><label class="form-label" for="{{ form_field.id_for_label }}">{{form_field.label}}:</label>
+                <br>
+                {{ form_field }}
+                {% if form_field is form.teams %}
                     <br>
-                    {{ form_field }}
+                    <a href="{% url 'new_team' %}">Добавить новую команду...</a>
+                    <a href="#task_blackout">Link to iframe</a>
+                {% endif %}
                 <div class="form-error">{{ f.errors }}</div>
             {% endfor %}
                 <button type="submit">apply</button>

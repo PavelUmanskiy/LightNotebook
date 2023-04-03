@@ -2,7 +2,15 @@ from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView, CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from .forms import DealForm, TaskForm, TeamForm, EmployeeForm, CustomerForm
+from .forms import (
+    DealForm,
+    TaskForm,
+    TeamForm,
+    GroupForm,
+    EmployeeForm,
+    CustomerForm,
+    
+)
 from .models import (
     Association,
     Customer,
@@ -135,6 +143,14 @@ class CustomerView(LoginRequiredMixin, DetailView):
 class DealCreate(LoginRequiredMixin, CreateView):
     template_name = 'create/deal.html'
     form_class = DealForm
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['deal_loop_range'] = (1, 2, 3)
+        context['association_for_utils'] = Association.objects\
+            .get(pk=self.request.session['last_association'])
+        return context
+    
 
 
 class TaskCreate(LoginRequiredMixin, CreateView):
@@ -143,7 +159,7 @@ class TaskCreate(LoginRequiredMixin, CreateView):
 
 
 class TeamCreate(LoginRequiredMixin, CreateView):
-    template_name = 'create/deal.html'
+    template_name = 'create/team.html'
     form_class = TeamForm
 
 
@@ -155,3 +171,8 @@ class EmployeeCreate(LoginRequiredMixin, CreateView):
 class CustomerCreate(LoginRequiredMixin, CreateView):
     template_name = 'create/customer.html'
     form_class = CustomerForm
+
+
+class GroupCreate(LoginRequiredMixin, CreateView):
+    template_name = 'create/customer.html'
+    form_class = GroupForm

@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}
+<title>New Grop</title>
+{% endblock title %}
+{% block content %}
+    <div class="blackout" id="team_blackout">
+        <a href="#team">
+            <div class="blackout-exit-left">task</div>
+            <div class="blackout-exit-right">task</div>
+        </a>
+        <iframe id="testIframe" src="{% url 'new_employee' %}">test</iframe>
+    </div>
+    <div class="picker-card-big" id="#team">
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-error">{{form.non_field_errors}}</div>
+            {% for form_field in form %}
+                <p><label class="form-label" for="{{ form_field.id_for_label }}">{{form_field.label}}:</label>
+                    <br>
+                    {{ form_field }}
+                    {% if form_field is form.employees %}
+                        <br>
+                        <a href="{% url 'new_employee' %}">Добавить нового работника...</a>
+                        <a href="#team_blackout">Link to iframe</a>
+                    {% endif %}
+                <div class="form-error">{{ f.errors }}</div>
+            {% endfor %}
+                <button type="submit">apply</button>
+        </form>
+</div>
+{% endblock content %}

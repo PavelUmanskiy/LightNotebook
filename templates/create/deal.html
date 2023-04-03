@@ -3,7 +3,34 @@
 <title>New Deal</title>
 {% endblock title %}
 {% block content %}
-    <div class="picker-card-big">
+    {% for i in deal_loop_range %}
+        {% if i == 1 %}
+            <div class="blackout" id="deal_blackout{{i}}">
+                <a href="#deal" style="background-color:orange;">
+                    <div class="blackout-exit-left">deal</div>
+                    <div class="blackout-exit-right">deal</div>
+                </a>
+                <iframe id="testIframe" src="{% url 'new_group' %}">test</iframe>
+            </div>
+        {% elif i == 2 %}
+        <div class="blackout" id="deal_blackout{{i}}">
+            <a href="#deal">
+                <div class="blackout-exit-left"></div>
+                <div class="blackout-exit-right"></div>
+            </a>
+            <iframe id="testIframe" src="{% url 'new_customer' %}">test</iframe>
+        </div>
+        {% elif i == 3 %}
+        <div class="blackout" id="deal_blackout{{i}}">
+            <a href="#deal">
+                <div class="blackout-exit-left"></div>
+                <div class="blackout-exit-right"></div>
+            </a>
+            <iframe id="testIframe" src="{% url 'new_task' %}">test</iframe>
+        </div>
+        {% endif %}
+    {% endfor %}
+    <div class="picker-card-big" id="#deal">
         <form method="post">
             {% csrf_token %}
             <div class="form-error">{{form.non_field_errors}}</div>
@@ -11,7 +38,21 @@
                 <p><label class="form-label" for="{{ form_field.id_for_label }}">{{form_field.label}}:</label>
                     <br>
                     {{ form_field }}
+                {% if form_field is form.deal_groups %}
+                    <br>
+                    <a href="{% url 'new_group' %}">Добавить новую группу...</a>
+                    <a href="#deal_blackout1">Link to iframe</a>
+                {% elif form_field is form.customers %}
+                    <br>
+                    <a href="{% url 'new_customer' %}">Добавить нового клиента...</a>
+                    <a href="#deal_blackout2">Link to iframe</a>
+                {% elif form_field is form.tasks %}
+                    <br>
+                    <a href="{% url 'new_task' %}">Добавить новую задачу...</a>
+                    <a href="#deal_blackout3">Link to iframe</a>
+                {% endif %}
                 <div class="form-error">{{ f.errors }}</div>
+                <hr>
             {% endfor %}
                 <button type="submit">apply</button>
         </form>

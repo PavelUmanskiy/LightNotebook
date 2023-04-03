@@ -4,6 +4,7 @@ from .models import (
     Deal,
     Task,
     Team,
+    Group,
     Employee,
     Customer,
 )
@@ -72,13 +73,13 @@ class TaskForm(forms.ModelForm):
         widgets = {
             'title': forms.TextInput(attrs={
                 'class': 'form-text',
-                'placeholder': 'Название сделки',
+                'placeholder': 'Название задачи',
             }),
             'description': forms.Textarea(attrs={
                 'class': 'form-text',
                 'cols': 60,
                 'rows': 15,
-                'placeholder': 'Описание сделки',
+                'placeholder': 'Описание задачи',
             }),
             'deadline': forms.DateInput(attrs={
                 'placeholder': 'ГГГГ-ММ-ДД',
@@ -97,7 +98,7 @@ class TeamForm(forms.ModelForm):
             'employees',
         ]
         labels = {
-            'name': 'Имя команды',
+            'name': 'Название команды',
             'description': 'Описание команды',
             'managers': 'Менеджеры команды',
             'team_leader': 'Лидер команды',
@@ -106,13 +107,13 @@ class TeamForm(forms.ModelForm):
         widgets = {
             'name': forms.TextInput(attrs={
                 'class': 'form-text',
-                'placeholder': 'Название сделки',
+                'placeholder': 'Название команды',
             }),
             'description': forms.Textarea(attrs={
                 'class': 'form-text',
                 'cols': 60,
                 'rows': 15,
-                'placeholder': 'Описание сделки',
+                'placeholder': 'Описание команды',
             }),
         }
 
@@ -137,13 +138,13 @@ class EmployeeForm(forms.ModelForm):
         widgets = {
             'name': forms.TextInput(attrs={
                 'class': 'form-text',
-                'placeholder': 'Название сделки',
+                'placeholder': 'Имя работника',
             }),
             'description': forms.Textarea(attrs={
                 'class': 'form-text',
                 'cols': 60,
                 'rows': 15,
-                'placeholder': 'Описание сделки',
+                'placeholder': 'Сводка о работнике',
             }),
         }
 
@@ -170,12 +171,23 @@ class CustomerForm(forms.ModelForm):
         widgets = {
             'name': forms.TextInput(attrs={
                 'class': 'form-text',
-                'placeholder': 'Название сделки',
+                'placeholder': 'Имя клиента',
             }),
             'description': forms.Textarea(attrs={
                 'class': 'form-text',
                 'cols': 60,
                 'rows': 15,
-                'placeholder': 'Описание сделки',
+                'placeholder': 'Сводка о клиенте',
             }),
         }
+
+
+class GroupForm(forms.ModelForm):
+    class Meta():
+        model = Group
+        fields = ['name']
+        labels = {'name': 'Название группы'}
+        widgets = {'name': forms.TextInput(attrs={
+            'class': 'form-text',
+            'placeholder': 'Название группы',
+        })}
